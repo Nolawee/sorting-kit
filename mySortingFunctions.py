@@ -121,7 +121,7 @@ def worstCase(sortFunction):
     sizePlots = []
     #make randomized lists/find time complexity for each list
     for i in xrange(0,20):
-        n = random.randrange(5,500,5)
+        n = random.randint(1,100)*5
         #print n
         sizePlots.append(n)
         lst = generateRandomList(n)
@@ -129,7 +129,9 @@ def worstCase(sortFunction):
         sortFunctionName = sortFunction.__name__
         timeComplexity = measureRunningTimeComplexity(sortFunction,lst)
         timePlots.append(timeComplexity)
-    print("{} has a worst case running time of {} seconds".format(sortFunctionName, max(timePlots)))
+    #print(n)
+    print("This is the array for all sizes of arrays {}".format(sizePlots))
+    #print("{} has a worst case running time of {} seconds".format(sortFunctionName, max(timePlots)))
     return max(timePlots)
 worstCase(mergeSort)
 worstCase(quickSort)
@@ -146,7 +148,7 @@ def averageCase(sortFunction):
         sortFunctionName = sortFunction.__name__
         timeComplexity = measureRunningTimeComplexity(sortFunction,lst)
         timePlots.append(timeComplexity)
-    print("{} has an average case running time of {} seconds".format(sortFunctionName, numpy.mean(timeComplexity)))
+    #print("{} has an average case running time of {} seconds".format(sortFunctionName, numpy.mean(timeComplexity)))
     return numpy.mean(timeComplexity)
 averageCase(mergeSort)
 averageCase(quickSort)
