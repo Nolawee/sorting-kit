@@ -11,6 +11,7 @@ import sys
 import random
 import time
 import numpy
+import matplotlib.pyplot as plt
 
 
 # --------- Insertion Sort -------------
@@ -61,37 +62,33 @@ def mergeSort (lst):
 
 #------ Quick Sort --------------
 
-def quickSort (lst):
-    if lst == []:
-        return []
-    else:
-        smallsorted = quickSort([x for x in lst[1:] if x <= lst[0]])
-        bigsorted   = quickSort([x for x in lst[1:] if x >  lst[0]])
-        return smallsorted + [lst[0]] + bigsorted
-
-'''
 def quickSort(lst):
-    if len(lst) < 2:
+    # TODO: Implement quicksort here
+    # You may add additional utility functions to help you out.
+    # But the function to do quicksort should be called quickSort
+    if (len(lst) <= 1):
         return lst
-    else:
-        pivot = lst[0]
-        del(lst[0])
+    (q, plst) = randPartition(lst)
+    left = quickSort(plst[0:q])
+    right = quickSort(plst[q + 1:len(plst)])
+    left.append(plst[q])
+    return left + right
 
-        lst_l = []
-        lst_r = []
+def randPartition(lst):
+    pivotP = random.randint(0, len(lst) - 1)
+    lst[len(lst) - 1], lst[pivotP] = lst[pivotP], lst[len(lst) - 1]
+    return partition(lst)
 
-        for number in lst:
-            if number < pivot:
-                lst_l.append(number)
-            else:
-                lst_r.append(number)
-        lstFinal = quickSort(lst_l)+[pivot]+quickSort(lst_r) 
-        return lstFinal 
-
-lst = [10, 329, 821 ,721, 663, 55, 23, 324, 212, 121]
-newlst = quickSort(lst)
-print(newlst)
-'''
+def partition(lst):
+    i = -1
+    pivot = lst[len(lst) - 1]
+    for j in range(0, len(lst) - 1):
+        if (lst[j] <= pivot):
+            i += 1
+            lst[j], lst[i] = lst[i], lst[j]
+    i += 1
+    lst[len(lst) - 1], lst[i] = lst[i], lst[len(lst) - 1]
+    return (i, lst)
 
 
 # ------ Timing Utility Functions ---------
@@ -114,45 +111,6 @@ def measureRunningTimeComplexity(sortFunction,lst):
     sortFunction(lst)
     t1 = time.clock() # A rather crude way to time the process.
     return (t1 - t0)
-
-def worstCase(sortFunction):
-    #make arrays to store index values and to store timeComplexity values
-    timePlots = []
-    sizePlots = []
-    #make randomized lists/find time complexity for each list
-    for i in xrange(0,20):
-        n = random.randint(1,100)*5
-        #print n
-        sizePlots.append(n)
-        lst = generateRandomList(n)
-        #appending time and number elements to appropriate arrays
-        sortFunctionName = sortFunction.__name__
-        timeComplexity = measureRunningTimeComplexity(sortFunction,lst)
-        timePlots.append(timeComplexity)
-    #print(n)
-    print("This is the array for all sizes of arrays {}".format(sizePlots))
-    #print("{} has a worst case running time of {} seconds".format(sortFunctionName, max(timePlots)))
-    return max(timePlots)
-worstCase(mergeSort)
-worstCase(quickSort)
-
-def averageCase(sortFunction):
-    timePlots = []
-    sizePlots = []
-    for i in xrange(0,20):
-        n = random.randrange(5,500,5)
-        #print n
-        sizePlots.append(n)
-        lst = generateRandomList(n)
-        #appending time and number elements to appropriate arrays
-        sortFunctionName = sortFunction.__name__
-        timeComplexity = measureRunningTimeComplexity(sortFunction,lst)
-        timePlots.append(timeComplexity)
-    #print("{} has an average case running time of {} seconds".format(sortFunctionName, numpy.mean(timeComplexity)))
-    return numpy.mean(timeComplexity)
-averageCase(mergeSort)
-averageCase(quickSort)
-
 
 
 # --- TODO
@@ -184,5 +142,99 @@ print(lst)
 timeComplexity = measureRunningTimeComplexity(quickSort,lst)
 print(timeComplexity)
 '''
+
+def runningTime():
+
+    insertionAverage = []
+    mergeAverage = []
+    quickAverage = []
+
+    insertionWorst = []
+    mergeWorst = []
+    quickWorst = []
+
+    n = []
+
+    for i in range(5, 505, 5):
+        insertionTimes = []
+        mergeTimes = []
+        quickTimes = []
+
+        worstInsertionTimes = []
+        worstMergeTimes = []
+        worstQuickTimes = []
+
+        for j in range(0,20):
+            random = generateRandomList(i)
+
+            #quickReversed = []
+            #mergeReversed = []
+            insertionReversed = []
+
+            for k in range(0, i):
+                #quickReversed.append(i)
+                #mergeReversed.append(i)
+                insertionReversed.append(i)
+
+            #quickReversed.reverse()
+            #mergeReversed.reverse()
+            insertionReversed.reverse()
+
+
+            #quickTime = measureRunningTimeComplexity(quickSort, random)
+            #mergeTime = measureRunningTimeComplexity(mergeSort, random)
+            insertionTime = measureRunningTimeComplexity(insertionSort, random)
+
+            #quickTimes.append(quickTime)
+            #mergeTimes.append(mergeTime)
+            insertionTimes.append(insertionTime)
+
+            #quickTime = measureRunningTimeComplexity(quickSort, quickReversed)
+            #mergeTime = measureRunningTimeComplexity(mergeSort, mergeReversed)
+            insertionTime = measureRunningTimeComplexity(insertionSort, insertionReversed)
+
+            #worstQuickTimes.append(quickTime)
+            #worstMergeTimes.append(mergeTime)
+            worstInsertionTimes.append(insertionTime)
+
+        #averageQuick = sum(quickTimes)/float(len(quickTimes))
+        #quickAverage.append(averageQuick)
+        #worstQuick = sum(worstQuickTimes)/float(len(worstQuickTimes))
+        #quickWorst.append(worstQuick)
+
+        
+        #averageMerge = (sum(mergeTimes))/float(len(mergeTimes))
+        #mergeAverage.append(averageMerge)
+        #worstMerge = sum(worstMergeTimes)/float(len(worstMergeTimes))
+        #mergeWorst.append(worstMerge)
+
+
+        averageInsertion = sum(insertionTimes)/float(len(insertionTimes))
+        insertionAverage.append(averageInsertion)
+        worstInsertion = sum(worstInsertionTimes)/float(len(worstInsertionTimes))
+        insertionWorst.append(worstInsertion)
+
+        n.append(i)
+
+        del insertionTimes
+        #del mergeTimes
+        #del quickTimes
+
+        del worstInsertionTimes
+        #del worstMergeTimes
+        #del worstQuickTimes
+
+    plt.plot(n, insertionAverage, 'bs')
+    plt.plot(n, insertionWorst, 'ro')
+
+    plt.ylabel('average/worst-case time (seconds)')
+    plt.xlabel('lists size n')
+
+    plt.title('Time table of InsertionSort')
+
+    plt.show()
+
+runningTime()
+
 
 
