@@ -169,33 +169,33 @@ def runningTime():
 
             #quickReversed = []
             #mergeReversed = []
-            insertionReversed = []
+            #insertionReversed = []
 
             for k in range(0, i):
                 #quickReversed.append(i)
                 #mergeReversed.append(i)
-                insertionReversed.append(i)
+                #insertionReversed.append(i)
 
             #quickReversed.reverse()
             #mergeReversed.reverse()
-            insertionReversed.reverse()
+            #insertionReversed.reverse()
 
 
             #quickTime = measureRunningTimeComplexity(quickSort, random)
             #mergeTime = measureRunningTimeComplexity(mergeSort, random)
-            insertionTime = measureRunningTimeComplexity(insertionSort, random)
+            #insertionTime = measureRunningTimeComplexity(insertionSort, random)
 
             #quickTimes.append(quickTime)
             #mergeTimes.append(mergeTime)
-            insertionTimes.append(insertionTime)
+            #insertionTimes.append(insertionTime)
 
             #quickTime = measureRunningTimeComplexity(quickSort, quickReversed)
             #mergeTime = measureRunningTimeComplexity(mergeSort, mergeReversed)
-            insertionTime = measureRunningTimeComplexity(insertionSort, insertionReversed)
+            #insertionTime = measureRunningTimeComplexity(insertionSort, insertionReversed)
 
             #worstQuickTimes.append(quickTime)
             #worstMergeTimes.append(mergeTime)
-            worstInsertionTimes.append(insertionTime)
+            #worstInsertionTimes.append(insertionTime)
 
         #averageQuick = sum(quickTimes)/float(len(quickTimes))
         #quickAverage.append(averageQuick)
@@ -209,28 +209,28 @@ def runningTime():
         #mergeWorst.append(worstMerge)
 
 
-        averageInsertion = sum(insertionTimes)/float(len(insertionTimes))
-        insertionAverage.append(averageInsertion)
-        worstInsertion = sum(worstInsertionTimes)/float(len(worstInsertionTimes))
-        insertionWorst.append(worstInsertion)
+        #averageInsertion = sum(insertionTimes)/float(len(insertionTimes))
+        #insertionAverage.append(averageInsertion)
+        #worstInsertion = sum(worstInsertionTimes)/float(len(worstInsertionTimes))
+        #insertionWorst.append(worstInsertion)
 
         n.append(i)
 
-        del insertionTimes
+        #del insertionTimes
         #del mergeTimes
         #del quickTimes
 
-        del worstInsertionTimes
+        #del worstInsertionTimes
         #del worstMergeTimes
         #del worstQuickTimes
 
-    plt.plot(n, insertionAverage, 'bs')
-    plt.plot(n, insertionWorst, 'ro')
+    plt.plot(n, quickAverage, 'bs')
+    plt.plot(n, quickWorst, 'ro')
 
     plt.ylabel('average/worst-case time (seconds)')
     plt.xlabel('lists size n')
 
-    plt.title('Time table of InsertionSort')
+    plt.title('Time table of QuickSort')
 
     plt.show()
 
